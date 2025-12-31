@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import re
 import joblib
+import seaborn as sns
 import matplotlib.pyplot as plt
 from pathlib import Path
 
@@ -250,10 +251,10 @@ def draw_graphs(df: pd.DataFrame, predictions: np.ndarray):
     df = df.copy()
     df["predicted_price"] = predictions
 
-    fig = plt.figure(figsize=(15, 5))
+    fig = plt.figure(figsize=(20, 20))
 
     # Distribution
-    ax1 = plt.subplot(1, 3, 1)
+    ax1 = plt.subplot(2, 2, 1)
     ax1.hist(predictions, bins=30, edgecolor="black", alpha=0.7)
     ax1.set_title("Распределение предсказанных цен")
     ax1.set_xlabel("Цена")
@@ -261,7 +262,7 @@ def draw_graphs(df: pd.DataFrame, predictions: np.ndarray):
     ax1.grid(True, alpha=0.3)
 
     # Price by 15 most popular manufacturers
-    ax2 = plt.subplot(1, 3, 2)
+    ax2 = plt.subplot(2, 2, 2)
     top_manufacturers = df["manufacturer"].value_counts().head(15).index
 
     df_box = df[df["manufacturer"].isin(top_manufacturers)]
@@ -283,12 +284,21 @@ def draw_graphs(df: pd.DataFrame, predictions: np.ndarray):
     ax2.grid(True, alpha=0.3, axis="x")
 
     # Price by year
-    ax3 = plt.subplot(1, 3, 3)
+    ax3 = plt.subplot(2, 2, 3)
     ax3.scatter(predictions, df["year"], alpha=0.6)
     ax3.set_title("Предсказанная цена по годам")
     ax3.set_xlabel("Цена")
     ax3.set_ylabel("Год")
     ax3.grid(True, alpha=0.3)
+
+    ax4 = plt.subplot(2, 2, 4)
+    sns.heatmap(
+        df.corr(numeric_only=True),
+        annot=True,
+        cmap="coolwarm",
+        linewidth=0.5,
+        ax=ax4,
+    )
 
     plt.tight_layout()
     return fig
