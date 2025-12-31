@@ -273,10 +273,10 @@ def draw_graphs(df: pd.DataFrame, predictions: np.ndarray):
 
     ax2.boxplot(
         data,
-        vert=False,  # горизонтально
-        labels=top_manufacturers,
-        showfliers=False,  # True если хочешь видеть выбросы
+        vert=False,
+        showfliers=False,
     )
+    ax2.set_yticklabels(top_manufacturers)
 
     ax2.set_title("Предсказанная цена по производителям")
     ax2.set_xlabel("Цена")
