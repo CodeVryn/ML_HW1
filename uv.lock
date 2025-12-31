@@ -1178,7 +1178,7 @@ wheels = [
 ]
 
 [[package]]
-name = "ml-ai25-homework"
+name = "ml-hw1"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
