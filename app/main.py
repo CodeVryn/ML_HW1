@@ -360,7 +360,7 @@ def main():
         - seats
     """)
 
-    file = st.file_uploader("", type=["csv"])
+    file = st.file_uploader("Загрузите CSV файл", type=["csv"])
 
     if not file:
         return
